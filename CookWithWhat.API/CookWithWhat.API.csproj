@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+        <ProjectReference Include="..\CookWithWhat.Application\CookWithWhat.Application.csproj" />
   </ItemGroup>
 
 </Project>
