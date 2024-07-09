@@ -3,7 +3,7 @@ using CookWithWhat.Domain.Entities;
 
 namespace CookWithWhat.Infrastructure.Persistence
 {
-    public class CookWithWhatDbContext : DbContext
+    internal class CookWithWhatDbContext(DbContextOptions<CookWithWhatDbContext> options) : DbContext(options)
     {
         public DbSet<Users> Users { get; set; }
         public DbSet<Recipes> Recipes { get; set; }
