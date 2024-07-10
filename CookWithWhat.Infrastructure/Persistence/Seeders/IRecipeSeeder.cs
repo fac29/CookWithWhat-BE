@@ -2,5 +2,5 @@
 
 public interface IRecipeSeeder
 {
-Task Seed();
+    Task Seed();
 }
