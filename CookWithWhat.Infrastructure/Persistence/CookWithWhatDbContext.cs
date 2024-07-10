@@ -11,7 +11,7 @@ namespace CookWithWhat.Infrastructure.Persistence
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //this should be dependency injection?
-            optionsBuilder.UseSqlite("Data Source=cookwithwhat.db");
+            optionsBuilder.UseSqlite("Data Source=../CookWithWhat.Infrastructure/Persistence/cookwithwhat.db");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
