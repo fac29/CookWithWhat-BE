@@ -1,6 +1,7 @@
 using CookWithWhat.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using CookWithWhat.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace CookWithWhat.API.Controllers;
 
@@ -12,17 +13,27 @@ public class RecipeController : ControllerBase
    private readonly CookWithWhatDbContext _context;
     public RecipeController(CookWithWhatDbContext context)
     {
-        _context = context!;
+        _context = context;
     }
 
     [HttpGet]
     [Route("all")]
-        
-         public IEnumerable<Recipes> Get()
+public async Task<ActionResult<IEnumerable<Recipes>>> GetAllRecipes()
     {
-          return new List<Recipes>();
-           
+        try
+        {
+            var recipes = await _context.Recipes.ToListAsync();
+            if (recipes == null || !recipes.Any())
+            {
+                return NotFound("No recipes found");
+            }
+            return Ok(recipes);
         }
-
+        catch (Exception ex)
+        {
+            // Log the exception
+            return StatusCode(500, $"Internal server error: {ex.Message}");
+        }
     }
+}
 
