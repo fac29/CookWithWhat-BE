@@ -1,23 +1,25 @@
 using CookWithWhat.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using CookWithWhat.Infrastructure.Persistence;
 
 namespace CookWithWhat.API.Controllers;
+
 [ApiController]
 [Route("[controller]")]
 public class RecipeController : ControllerBase
 {
 
-    private readonly ILogger<RecipeController> _logger;
-    public RecipeController(ILogger<RecipeController> logger)
+   private readonly CookWithWhatDbContext _context;
+    public RecipeController(CookWithWhatDbContext context)
     {
-        _logger = logger;
+        _context = context!;
     }
 
     [HttpGet]
     [Route("all")]
+        
          public IEnumerable<Recipes> Get()
     {
-      _logger.LogInformation("Hello World");
           return new List<Recipes>();
            
         }

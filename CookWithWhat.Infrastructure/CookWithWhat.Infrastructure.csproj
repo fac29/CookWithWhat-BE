@@ -8,6 +8,7 @@
   
   <ItemGroup>
     <ProjectReference Include="..\CookWithWhat.Application\CookWithWhat.Application.csproj" />
+    <ProjectReference Include="..\CookWithWhat.Domain\CookWithWhat.Domain.csproj" />
   </ItemGroup>
   
   <ItemGroup>
