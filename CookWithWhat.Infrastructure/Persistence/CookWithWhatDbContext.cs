@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using CookWithWhat.Domain.Entities;
+using CookWithWhat.Domain.Interfaces;
 
 namespace CookWithWhat.Infrastructure.Persistence
 {

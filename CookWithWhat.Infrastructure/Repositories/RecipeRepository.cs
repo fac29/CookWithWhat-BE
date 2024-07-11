@@ -1,11 +1,11 @@
 ﻿using CookWithWhat.Domain.Interfaces;
 using CookWithWhat.Infrastructure.Persistence;
-
+using Microsoft.EntityFrameworkCore;
 namespace CookWithWhat.Infrastructure;
 
 public class RecipeRepository : IRecipe
 {
-    private readonly CookWithWhatDbContext _context;
+    private readonly CookWithWhatDbContext _context = default!;
     public int Id => throw new NotImplementedException();
 
     public string Title { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
@@ -23,7 +23,7 @@ public class RecipeRepository : IRecipe
     //     throw new NotImplementedException();
     // }
 
-    public async IEnumerable<IRecipe> GetAllRecipes()
+    public async Task<IEnumerable<IRecipe>> GetAllRecipes()
     {
         return await _context.Recipes.ToListAsync();
     }

@@ -11,7 +11,7 @@ namespace CookWithWhat.Domain.Interfaces;
         string Instructions { get; set; }
 
         
-        IEnumerable<IRecipe> GetAllRecipes();
+        //IEnumerable<IRecipe> GetAllRecipes();
         // create the method to retrieve a single recipe
         // IRecipe GetRecipeById(int id);
         // // create the method to create a new recipe
