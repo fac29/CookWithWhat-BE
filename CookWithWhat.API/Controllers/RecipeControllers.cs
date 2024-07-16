@@ -10,7 +10,7 @@ namespace CookWithWhat.API.Controllers;
 public class RecipeController : ControllerBase
 {
 
-   private readonly CookWithWhatDbContext _context;
+    private readonly CookWithWhatDbContext _context;
     public RecipeController(CookWithWhatDbContext context)
     {
         _context = context;
@@ -18,7 +18,7 @@ public class RecipeController : ControllerBase
 
     [HttpGet]
     [Route("all")]
-public async Task<ActionResult<IEnumerable<Recipes>>> GetAllRecipes()
+    public async Task<ActionResult<IEnumerable<Recipes>>> GetAllRecipes()
     {
         try
         {
@@ -35,5 +35,24 @@ public async Task<ActionResult<IEnumerable<Recipes>>> GetAllRecipes()
             return StatusCode(500, $"Internal server error: {ex.Message}");
         }
     }
-}
 
+    [HttpGet]
+    [Route("{id}")]
+    public async Task<ActionResult<Recipes>> GetRecipe(int id)
+    {
+        try
+        {
+            var recipe = await _context.Recipes.FirstOrDefaultAsync(r => r.Id == id);
+            if (recipe == null)
+            {
+                return NotFound("Recipe not found");
+            }
+            return Ok(recipe);
+        }
+        catch (Exception ex)
+        {
+            // Log the exception
+            return StatusCode(500, $"Internal server error: {ex.Message}");
+        }
+    }
+}
