@@ -38,7 +38,7 @@ public class RecipeController : ControllerBase
 
     [HttpGet]
     [Route("{id}")]
-    public async Task<ActionResult<Recipes>> GetRecipe(int id)
+    public async Task<ActionResult<Recipes>> GetRecipeById(int id)
     {
         try
         {
