@@ -14,6 +14,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
         <ProjectReference Include="..\CookWithWhat.Application\CookWithWhat.Application.csproj" />
         <ProjectReference Include="..\CookWithWhat.Infrastructure\CookWithWhat.Infrastructure.csproj" />
+        
   </ItemGroup>
 
 </Project>
