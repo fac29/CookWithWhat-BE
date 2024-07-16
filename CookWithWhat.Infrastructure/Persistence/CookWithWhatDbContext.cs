@@ -1,4 +1,5 @@
 using CookWithWhat.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
 namespace CookWithWhat.Infrastructure.Persistence
@@ -17,7 +18,7 @@ namespace CookWithWhat.Infrastructure.Persistence
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlite("Data Source=../CookWithWhat.Infrastructure/Persistence/cookwithwhat.db");
+                optionsBuilder.UseSqlite("Data Source=./CookWithWhat.Infrastructure/Persistence/cookwithwhat.db");
             }
         }
 
@@ -33,7 +34,7 @@ namespace CookWithWhat.Infrastructure.Persistence
         public CookWithWhatDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<CookWithWhatDbContext>();
-            optionsBuilder.UseSqlite("Data Source=../CookWithWhat.Infrastructure/Persistence/cookwithwhat.db");
+            optionsBuilder.UseSqlite("Data Source=./CookWithWhat.Infrastructure/Persistence/cookwithwhat.db");
 
             return new CookWithWhatDbContext(optionsBuilder.Options);
         }
