@@ -13,6 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructure(builder.Configuration);
+//This is dependecy injection
 builder.Services.AddDbContext<CookWithWhatDbContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
