@@ -1,0 +1,67 @@
+# ICU libraries, needed for running self contained apps. (International Components for Unicode)
+sudo yum install -y libicu
+
+# Publish self contained app
+dotnet publish CookWithWhat.API.csproj --configuration Release --runtime linux-x64 --self-contained --output ./out
+
+# Copy to the EC2 instance
+ scp -i CWW.pem -r ./CookWithWhat.API/out/* ec2-user@13.40.216.25:/home/ec2-user/app
+
+# Permissions to the database
+
+sudo chown ec2-user:ec2-user /home/ec2-user/app/CookWithWhat.Infrastructure/Persistence/cookwithwhat.db
+sudo chmod 664 /home/ec2-user/app/CookWithWhat.Infrastructure/Persistence/cookwithwhat.db
+
+# Ngingx
+
+sudo yum install nginx -y
+sudo nano /etc/nginx/nginx.conf
+
+		user nginx;
+		worker_processes auto;
+
+		error_log /var/log/nginx/error.log warn;
+		pid /var/run/nginx.pid;
+
+		events {
+		    worker_connections 1024;
+		}
+
+		http {
+		    include /etc/nginx/mime.types;
+		    default_type application/octet-stream;
+
+		    log_format main '$remote_addr - $remote_user [$time_local] "$request" '
+				      '$status $body_bytes_sent "$http_referer" '
+				      '"$http_user_agent" "$http_x_forwarded_for"';
+
+		    access_log /var/log/nginx/access.log main;
+
+		    sendfile on;
+		    keepalive_timeout 65;
+
+		    include /etc/nginx/conf.d/*.conf;
+
+		    server {
+			listen 80;
+			server_name 13.40.216.25; # Replace with your EC2 instance's public IP or domain name
+
+			location / {
+			    proxy_pass http://localhost:5000;
+			    proxy_http_version 1.1;
+			    proxy_set_header Upgrade $http_upgrade;
+			    proxy_set_header Connection keep-alive;
+			    proxy_set_header Host $host;
+			    proxy_cache_bypass $http_upgrade;
+			    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+			    proxy_set_header X-Forwarded-Proto $scheme;
+			}
+		    }
+		}
+
+sudo systemctl restart nginx
+
+# Install PM2
+
+
+
