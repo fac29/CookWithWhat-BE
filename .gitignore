@@ -483,5 +483,5 @@ $RECYCLE.BIN/
 # Vim temporary swap files
 *.swp
 
-CWWKEY.ppk
-CWWKEY.pem
+CWW.ppk
+CWW.pem
