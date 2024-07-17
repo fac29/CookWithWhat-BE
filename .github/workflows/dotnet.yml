@@ -10,7 +10,8 @@ on:
     branches: ['AlexTemp']
 
 jobs:
-  build:
+  deployment:
+    environment: 'Production'
     runs-on: ubuntu-latest
 
     steps:
@@ -33,6 +34,6 @@ jobs:
           KEY: ${{ secrets.SSH_KEY }}
         with:
           source: './CookWithWhat.API/out/*'
-          target: '/home/ec2-user/app '
+          target: '/home/ec2-user/app'
 
-        # run:  scp -i CWW.pem -r ./CookWithWhat.API/out/* ec2-user@18.168.152.55:/home/ec2-user/app
+          # run:  scp -i CWW.pem -r ./CookWithWhat.API/out/* ec2-user@18.168.152.55:/home/ec2-user/app
