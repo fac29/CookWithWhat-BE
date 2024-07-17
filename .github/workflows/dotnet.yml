@@ -80,3 +80,5 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           source: './*'
           target: '/home/ec2-user/app'
+
+          # No
