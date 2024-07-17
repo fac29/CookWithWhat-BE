@@ -22,7 +22,7 @@ jobs:
       - name: Build
         run: dotnet build --no-restore
       - name: Publish
-        run: dotnet publish CookWithWhat.API/CookWithWhat.API.csproj --configuration Release --runtime linux-x64 --self-contained --output ./out
+        run: dotnet publish CookWithWhat.API/CookWithWhat.API.csproj --configuration Release --runtime linux-x64 --self-contained --output ./
 
       # Configure AWS credentials
       - name: Configure AWS credentials
