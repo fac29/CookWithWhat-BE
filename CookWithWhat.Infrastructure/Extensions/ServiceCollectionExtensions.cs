@@ -6,13 +6,14 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace CookWithWhat.Infrastructure.Extensions;
 
-    public static class ServiceCollectionExtensions
+public static class ServiceCollectionExtensions
+{
+    public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration) 
-        { 
-            var connectionString = configuration.GetConnectionString("CookWithWhatDb");
-            services.AddDbContext<CookWithWhatDbContext>(options => options.UseSqlite(connectionString));
+        var connectionString = configuration.GetConnectionString("CookWithWhatDb");
+        services.AddDbContext<CookWithWhatDbContext>(options => options.UseSqlite(connectionString));
 
-            services.AddScoped<IRecipeSeeder, RecipeSeeder>();
-        }
+        services.AddScoped<IRecipeSeeder, RecipeSeeder>();
+        services.AddScoped<IUserSeeder, UserSeeder>();
     }
+}

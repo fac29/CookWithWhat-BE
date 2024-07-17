@@ -1,11 +1,11 @@
 namespace CookWithWhat.Domain.Entities;
+using CookWithWhat.Domain.Interfaces;
 
-public class Users
+public class Users : IUser
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     public string Username { get; set; } = default!;
     public string Email { get; set; } = default!;
     public string Password { get; set; } = default!;
-    public string Allergy { get; set; } = default!;
 
 }
