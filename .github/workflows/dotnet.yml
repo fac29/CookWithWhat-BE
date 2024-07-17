@@ -146,3 +146,7 @@ jobs:
             }
             EOT
             sudo systemctl restart nginx
+
+            # Make the application executable and run it
+            chmod +x /home/ec2-user/app/CookWithWhat.API
+            nohup /home/ec2-user/app/CookWithWhat.API > /home/ec2-user/app.log 2>&1 &
