@@ -47,6 +47,7 @@ jobs:
           INSTANCE_ID=$(aws ec2 run-instances \
               --image-id ami-026b2ae0ba2773e0a \
               --instance-type t2.micro \
+              --key-name CWW \
               --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=CWW}]' \
               --query 'Instances[0].InstanceId' \
               --output text)
