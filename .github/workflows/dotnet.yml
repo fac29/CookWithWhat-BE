@@ -81,14 +81,6 @@ jobs:
           PUBLIC_IP=$(aws ec2 describe-instances --instance-ids ${{ steps.set_instance.outputs.instance_id }} --query 'Reservations[].Instances[].PublicIpAddress' --output text)
           echo "public_ip=$PUBLIC_IP" >> $GITHUB_OUTPUT
 
-      # # Debug SSH connection
-      # - name: Debug SSH connection
-      #   run: |
-      #     echo "${{ secrets.SSH_KEY }}" > private_key.pem
-      #     chmod 600 private_key.pem
-      #     ssh -vvv -i private_key.pem -o StrictHostKeyChecking=no ec2-user@${{ steps.get_ip.outputs.public_ip }} echo "SSH connection successful"
-      #   continue-on-error: true
-
       # Copy to the EC2 instance.
       - name: Copy files to EC2
         uses: easingthemes/ssh-deploy@main
@@ -100,3 +92,57 @@ jobs:
           TARGET: "/home/ec2-user/app"
          
     
+      # Configure EC2 instance
+      - name: Configure EC2 instance
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ steps.get_ip.outputs.public_ip }}
+          username: ec2-user
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            sudo yum install -y libicu
+            sudo yum install nginx -y
+            sudo tee /etc/nginx/nginx.conf > /dev/null <<EOT
+            user nginx;
+            worker_processes auto;
+
+            error_log /var/log/nginx/error.log warn;
+            pid /var/run/nginx.pid;
+
+            events {
+                worker_connections 1024;
+            }
+
+            http {
+                include /etc/nginx/mime.types;
+                default_type application/octet-stream;
+
+                log_format main '\$remote_addr - \$remote_user [\$time_local] "\$request" '
+                  '\$status \$body_bytes_sent "\$http_referer" '
+                  '"\$http_user_agent" "\$http_x_forwarded_for"';
+
+                access_log /var/log/nginx/access.log main;
+
+                sendfile on;
+                keepalive_timeout 65;
+
+                include /etc/nginx/conf.d/*.conf;
+
+                server {
+                    listen 80;
+                    server_name ${{ steps.get_ip.outputs.public_ip }}; # Using the EC2 instance's public IP
+
+                    location / {
+                        proxy_pass http://localhost:5000;
+                        proxy_http_version 1.1;
+                        proxy_set_header Upgrade \$http_upgrade;
+                        proxy_set_header Connection keep-alive;
+                        proxy_set_header Host \$host;
+                        proxy_cache_bypass \$http_upgrade;
+                        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+                        proxy_set_header X-Forwarded-Proto \$scheme;
+                    }
+                }
+            }
+            EOT
+            sudo systemctl restart nginx
