@@ -45,14 +45,14 @@ jobs:
         id: create_ec2
         run: |
           INSTANCE_ID=$(aws ec2 run-instances \
-              --image-id ami-0eb260c4d5475b901 \
+              --image-id ami-026b2ae0ba2773e0a \
               --instance-type t2.micro \
-              --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=CookWithWhatInstance}]' \
+              --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=CWW}]' \
               --query 'Instances[0].InstanceId' \
               --output text)
           echo "Created new EC2 instance with ID: $INSTANCE_ID"
           echo "instance_id=$INSTANCE_ID" >> $GITHUB_OUTPUT
-        
+
       # Set instance ID
       - name: Set instance ID
         id: set_instance
