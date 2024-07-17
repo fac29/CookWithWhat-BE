@@ -14,7 +14,7 @@ namespace CookWithWhat.Infrastructure.Persistence
         {
             //this should be dependency injection?
             optionsBuilder.UseSqlite(
-                "Data Source=CookWithWhat.Infrastructure/Persistence/cookwithwhat.db"
+                "Data Source=./CookWithWhat.Infrastructure/Persistence/cookwithwhat.db"
             );
         }
 
