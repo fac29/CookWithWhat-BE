@@ -482,3 +482,9 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+CWW.ppk
+CWW.pem
+
+# AWS Environment name
+cdk.json
