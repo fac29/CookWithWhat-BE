@@ -54,6 +54,15 @@ jobs:
           echo "Created new EC2 instance with ID: $INSTANCE_ID"
           echo "instance_id=$INSTANCE_ID" >> $GITHUB_OUTPUT
 
+      # Check if key pair exists
+      - name: Check if key pair exists
+        run: |
+          KEY_PAIR=$(aws ec2 describe-key-pairs --key-names CWW --query 'KeyPairs[*].KeyName' --output text)
+          if [ -z "$KEY_PAIR" ]; then
+            echo "Error: CWW key pair does not exist in AWS. Please create it first."
+            exit 1
+          fi
+
       # Set instance ID
       - name: Set instance ID
         id: set_instance
@@ -80,13 +89,13 @@ jobs:
           ssh -vvv -i private_key.pem -o StrictHostKeyChecking=no ec2-user@${{ steps.get_ip.outputs.public_ip }} echo "SSH connection successful"
         continue-on-error: true
 
-      # Copy to the EC2 instance
+      # Copy to the EC2 instance.
       - name: Copy to the EC2 instance
         uses: appleboy/scp-action@master
         with:
           host: ${{ steps.get_ip.outputs.public_ip }}
           username: ec2-user
           key: ${{ secrets.SSH_KEY }}
-          source: "./out/*"
-          target: "/home/ec2-user/app"
-          strip_components: 1
+          source: './out/*'
+          target: '/home/ec2-user/app'
+    
