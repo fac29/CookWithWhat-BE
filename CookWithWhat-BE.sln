@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CookWithWhat.Application", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CookWithWhat.Infrastructure", "CookWithWhat.Infrastructure\CookWithWhat.Infrastructure.csproj", "{193725AA-6697-4ADD-83FC-5D0932CFC882}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CookWithWhat.CDK", "CookWithWhat.CDK\CookWithWhat.CDK.csproj", "{07371D0D-CC2A-44E4-B76B-1698B831C464}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{193725AA-6697-4ADD-83FC-5D0932CFC882}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{193725AA-6697-4ADD-83FC-5D0932CFC882}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{193725AA-6697-4ADD-83FC-5D0932CFC882}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07371D0D-CC2A-44E4-B76B-1698B831C464}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07371D0D-CC2A-44E4-B76B-1698B831C464}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07371D0D-CC2A-44E4-B76B-1698B831C464}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07371D0D-CC2A-44E4-B76B-1698B831C464}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
