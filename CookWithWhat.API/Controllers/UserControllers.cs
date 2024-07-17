@@ -35,5 +35,25 @@ public class UserController : ControllerBase
             return StatusCode(500, $"Internal server error: {ex.Message}");
         }
     }
+
+    [HttpGet]
+    [Route("{id}")]
+    public async Task<ActionResult<Users>> GetUserById(int id)
+    {
+        try
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(r => r.Id == id);
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+            return Ok(user);
+        }
+        catch (Exception ex)
+        {
+            // Log the exception
+            return StatusCode(500, $"Internal server error: {ex.Message}");
+        }
+    }
 }
 
