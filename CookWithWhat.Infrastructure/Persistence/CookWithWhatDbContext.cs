@@ -21,7 +21,7 @@ namespace CookWithWhat.Infrastructure.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            // Define additional configurations here
+            // Define additional configurations here.
         }
     }
 }
