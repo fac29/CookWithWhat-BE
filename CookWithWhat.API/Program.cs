@@ -19,8 +19,10 @@ builder.Services.AddDbContext<CookWithWhatDbContext>(options =>
 var app = builder.Build();
 
 var scope = app.Services.CreateScope();
-var seeder = scope.ServiceProvider.GetRequiredService<IRecipeSeeder>();
-await seeder.Seed();
+var RecipeSeeder = scope.ServiceProvider.GetRequiredService<IRecipeSeeder>();
+await RecipeSeeder.Seed();
+var UserSeeder = scope.ServiceProvider.GetRequiredService<IUserSeeder>();
+await UserSeeder.Seed();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

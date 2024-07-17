@@ -7,27 +7,27 @@ namespace CookWithWhat.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class RecipeController : ControllerBase
+public class UserController : ControllerBase
 {
 
     private readonly CookWithWhatDbContext _context;
-    public RecipeController(CookWithWhatDbContext context)
+    public UserController(CookWithWhatDbContext context)
     {
         _context = context;
     }
 
     [HttpGet]
     [Route("all")]
-    public async Task<ActionResult<IEnumerable<Recipes>>> GetAllRecipes()
+    public async Task<ActionResult<IEnumerable<Users>>> GetAllUsers()
     {
         try
         {
-            var recipes = await _context.Recipes.ToListAsync();
-            if (recipes == null || !recipes.Any())
+            var users = await _context.Users.ToListAsync();
+            if (users == null || !users.Any())
             {
-                return NotFound("No recipes found");
+                return NotFound("No users found");
             }
-            return Ok(recipes);
+            return Ok(users);
         }
         catch (Exception ex)
         {
@@ -38,16 +38,16 @@ public class RecipeController : ControllerBase
 
     [HttpGet]
     [Route("{id}")]
-    public async Task<ActionResult<Recipes>> GetRecipeById(int id)
+    public async Task<ActionResult<Users>> GetUserById(int id)
     {
         try
         {
-            var recipe = await _context.Recipes.FirstOrDefaultAsync(r => r.Id == id);
-            if (recipe == null)
+            var user = await _context.Users.FirstOrDefaultAsync(r => r.Id == id);
+            if (user == null)
             {
-                return NotFound("Recipe not found");
+                return NotFound("User not found");
             }
-            return Ok(recipe);
+            return Ok(user);
         }
         catch (Exception ex)
         {
