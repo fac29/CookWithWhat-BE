@@ -19,12 +19,4 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.7" />
   </ItemGroup>
 
-  <ItemGroup>
-  <None Update=".\Persistence\cookwithwhat.db">
-    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-     <TargetPath>CookWithWhat.Infrastructure/Persistence/cookwithwhat.db</TargetPath>
-  </None>
-</ItemGroup>
-
 </Project>
