@@ -485,3 +485,6 @@ $RECYCLE.BIN/
 
 CWW.ppk
 CWW.pem
+
+# AWS Environment name
+cdk.json
