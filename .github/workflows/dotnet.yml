@@ -32,5 +32,5 @@ jobs:
           host: '18.168.152.55'
           username: ec2-user
           key: ${{ secrets.SSH_KEY }}
-          source: './out/*'
+          source: './*'
           target: '/home/ec2-user/app'
