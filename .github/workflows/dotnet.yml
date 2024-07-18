@@ -96,6 +96,65 @@ jobs:
             sleep 10
           done
 
+      # Wait for instance to be running and ready
+      - name: Wait for instance to be running and ready
+        run: |
+          echo "Waiting for instance to be in running state..."
+          while true; do
+            STATE=$(aws ec2 describe-instances --instance-ids ${{ steps.set_instance.outputs.instance_id }} --query 'Reservations[].Instances[].State.Name' --output text)
+            if [ "$STATE" = "running" ]; then
+              echo "Instance is now running. Waiting for status checks..."
+              break
+            fi
+            echo "Current state: $STATE. Waiting 10 seconds..."
+            sleep 10
+          done
+
+          messages=(
+            "Calibrating the warp drive..."
+            "Engaging hyperdrive sequence..."
+            "Uploading the Matrix..."
+            "Summoning the Elder Gods of Code..."
+            "Generating infinite improbability..."
+            "Aligning the Stargate coordinates..."
+            "Deploying minions to the cloud..."
+            "Energizing photon torpedoes..."
+            "Spinning up the TARDIS..."
+            "Compiling quantum algorithms..."
+            "Rendering the holodeck simulation..."
+            "Initializing lightsaber protocols..."
+            "Powering up the Infinity Gauntlet..."
+            "Syncing with the Batcomputer..."
+            "Brewing a cup of Java..."
+            "Encrypting with the Enigma machine..."
+            "Building the Death Star..."
+            "Activating stealth mode..."
+            "Merging with the Borg Collective..."
+            "Generating warp field..."
+            "Slicing the virtual reality pie..."
+            "Configuring the neural network..."
+            "Charging the proton packs..."
+            "Hacking the Gibson..."
+            "Inserting the Mario cartridge..."
+            "Connecting to the Holonet..."
+            "Aligning magnetic fields..."
+            "Engaging cloak of invisibility..."
+            "Calculating Pi to infinity..."
+            "Resurrecting the Necromancer's code..."
+          )
+
+          message_index=0
+          while true; do
+            STATUS=$(aws ec2 describe-instance-status --instance-ids ${{ steps.set_instance.outputs.instance_id }} --query 'InstanceStatuses[].InstanceStatus.Status' --output text)
+            if [ "$STATUS" = "ok" ]; then
+              echo "Instance status checks passed. Instance is ready."
+              break
+            fi
+            echo "${messages[message_index]}"
+            message_index=$(( (message_index + 1) % ${#messages[@]} ))
+            sleep 10
+          done
+
       # Get public IP address
       - name: Get public IP address
         id: get_ip
