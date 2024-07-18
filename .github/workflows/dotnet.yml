@@ -54,6 +54,8 @@ jobs:
           echo "Created new EC2 instance with ID: $INSTANCE_ID"
           echo "instance_id=$INSTANCE_ID" >> $GITHUB_OUTPUT
 
+  
+
       # Check if key pair exists
       - name: Check if key pair exists
         run: |
@@ -70,6 +72,16 @@ jobs:
           INSTANCE_ID=${{ steps.check_ec2.outputs.instance_id || steps.create_ec2.outputs.instance_id }}
           echo "instance_id=$INSTANCE_ID" >> $GITHUB_OUTPUT
 
+      # Check if EC2 instance is running
+      - name: Check EC2 instance state
+        run: |
+          STATE=$(aws ec2 describe-instances --instance-ids ${{ steps.set_instance.outputs.instance_id }} --query 'Reservations[].Instances[].State.Name' --output text)
+          echo "Instance state: $STATE"
+          if [ "$STATE" != "running" ]; then
+            echo "Error: Instance is not in running state"
+            exit 1
+          fi
+
       # Wait for instance to be running
       - name: Wait for instance to be running
         run: aws ec2 wait instance-running --instance-ids ${{ steps.set_instance.outputs.instance_id }}
@@ -81,7 +93,7 @@ jobs:
           PUBLIC_IP=$(aws ec2 describe-instances --instance-ids ${{ steps.set_instance.outputs.instance_id }} --query 'Reservations[].Instances[].PublicIpAddress' --output text)
           echo "public_ip=$PUBLIC_IP" >> $GITHUB_OUTPUT
 
-      # Copy to the EC2 instance.
+      # Copy files to the EC2 instance.
       - name: Copy files to EC2
         uses: easingthemes/ssh-deploy@main
         with:
@@ -90,8 +102,8 @@ jobs:
           REMOTE_USER: ec2-user
           SOURCE: "./out/"
           TARGET: "/home/ec2-user/app"
+          ARGS: "-v"
          
-    
       # Configure EC2 instance
       - name: Configure EC2 instance
         uses: appleboy/ssh-action@master
