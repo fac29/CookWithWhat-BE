@@ -167,26 +167,11 @@ jobs:
                 }
             }
             EOT
-            sudo systemctl restart nginx
+            sudo systemctl restart nginx;
 
-            chmod +x /home/ec2-user/app/CookWithWhat.API 
-            nohup /home/ec2-user/app/CookWithWhat.API
+            chmod +x /home/ec2-user/app/CookWithWhat.API;
+            nohup /home/ec2-user/app/CookWithWhat.API;
             
-
-            
-            
-
-            
-            
-
-            
-
-           # Make the application executable and run it
-           # chmod +x /home/ec2-user/app/CookWithWhat.API
-           # nohup /home/ec2-user/app/CookWithWhat.API > /home/ec2-user/app.log 2>&1 &
-            
-
-
       # Output the public IP
       - name: Output Public IP
         run: |
