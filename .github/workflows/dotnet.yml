@@ -72,19 +72,29 @@ jobs:
           INSTANCE_ID=${{ steps.check_ec2.outputs.instance_id || steps.create_ec2.outputs.instance_id }}
           echo "instance_id=$INSTANCE_ID" >> $GITHUB_OUTPUT
 
-      # Check if EC2 instance is running
-      - name: Check EC2 instance state
+      # Wait for instance to be running and ready
+      - name: Wait for instance to be running and ready
         run: |
-          STATE=$(aws ec2 describe-instances --instance-ids ${{ steps.set_instance.outputs.instance_id }} --query 'Reservations[].Instances[].State.Name' --output text)
-          echo "Instance state: $STATE"
-          if [ "$STATE" != "running" ]; then
-            echo "Error: Instance is not in running state"
-            exit 1
-          fi
+          echo "Waiting for instance to be in running state..."
+          while true; do
+            STATE=$(aws ec2 describe-instances --instance-ids ${{ steps.set_instance.outputs.instance_id }} --query 'Reservations[].Instances[].State.Name' --output text)
+            if [ "$STATE" = "running" ]; then
+              echo "Instance is now running. Waiting for status checks..."
+              break
+            fi
+            echo "Current state: $STATE. Waiting 10 seconds..."
+            sleep 10
+          done
 
-      # Wait for instance to be running
-      - name: Wait for instance to be running
-        run: aws ec2 wait instance-running --instance-ids ${{ steps.set_instance.outputs.instance_id }}
+          while true; do
+            STATUS=$(aws ec2 describe-instance-status --instance-ids ${{ steps.set_instance.outputs.instance_id }} --query 'InstanceStatuses[].InstanceStatus.Status' --output text)
+            if [ "$STATUS" = "ok" ]; then
+              echo "Instance status checks passed. Instance is ready."
+              break
+            fi
+            echo "Current status: $STATUS. Waiting 10 seconds..."
+            sleep 10
+          done
 
       # Get public IP address
       - name: Get public IP address
