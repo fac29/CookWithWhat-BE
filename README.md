@@ -8,4 +8,4 @@ To test this please run the following commands
 
 then go onto this swagger link to test the API end points
 
-` [http://localhost:5000/swagger](url) `
+ [http://localhost:5000/swagger](url) 
