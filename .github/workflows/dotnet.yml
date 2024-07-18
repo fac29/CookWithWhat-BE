@@ -170,18 +170,18 @@ jobs:
             sudo systemctl restart nginx
 
             
-            cd /home/ec2-user/app
+            
 
             
-            chmod +x CookWithWhat
+            chmod +x /home/ec2-user/app/CookWithWhat.API 
 
             
-            nohup ./CookWithWhat > /home/ec2-user/app.log 2>&1 &
+            nohup /home/ec2-user/app/CookWithWhat.API > /home/ec2-user/app.log 2>&1 &
 
             echo "Application started. Check /home/ec2-user/app.log for output."
 
             
-            if pgrep -f "./CookWithWhat" > /dev/null
+            if pgrep -f "/home/ec2-user/app/CookWithWhat.API" > /dev/null
             then
               echo "Application is running."
             else
