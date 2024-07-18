@@ -173,22 +173,12 @@ jobs:
             
 
             
-            chmod +x /home/ec2-user/app/CookWithWhat.API 
+            
 
             
             
 
-            echo "Application started. Check /home/ec2-user/app.log for output."
-
             
-            if pgrep -f "/home/ec2-user/app/CookWithWhat.API" > /dev/null
-            then
-              echo "Application is running."
-            else
-              echo "Error: Application failed to start. Check /home/ec2-user/app.log for details."
-              exit 1
-            fi
-
 
            # Make the application executable and run it
            # chmod +x /home/ec2-user/app/CookWithWhat.API
