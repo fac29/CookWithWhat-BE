@@ -169,9 +169,31 @@ jobs:
             EOT
             sudo systemctl restart nginx
 
-            # Make the application executable and run it
-            chmod +x /home/ec2-user/app/CookWithWhat.API
+            
+            cd /home/ec2-user/app
+
+            
+            chmod +x CookWithWhat
+
+            
+            nohup ./CookWithWhat > /home/ec2-user/app.log 2>&1 &
+
+            echo "Application started. Check /home/ec2-user/app.log for output."
+
+            
+            if pgrep -f "./CookWithWhat" > /dev/null
+            then
+              echo "Application is running."
+            else
+              echo "Error: Application failed to start. Check /home/ec2-user/app.log for details."
+              exit 1
+            fi
+
+
+           # Make the application executable and run it
+           # chmod +x /home/ec2-user/app/CookWithWhat.API
            # nohup /home/ec2-user/app/CookWithWhat.API > /home/ec2-user/app.log 2>&1 &
+            
 
 
       # Output the public IP
