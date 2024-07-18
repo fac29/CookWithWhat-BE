@@ -169,9 +169,6 @@ jobs:
             EOT
             sudo systemctl restart nginx;
 
-            chmod +x /home/ec2-user/app/CookWithWhat.API;
-            nohup /home/ec2-user/app/CookWithWhat.API;
-            
       # Output the public IP
       - name: Output Public IP
         run: |
