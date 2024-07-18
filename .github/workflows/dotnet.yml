@@ -117,7 +117,7 @@ jobs:
             fi
             echo "${messages[message_index]}"
             message_index=$(( (message_index + 1) % ${#messages[@]} ))
-            sleep 10
+            sleep 5
           done
 
           echo "Performing final checks..."
@@ -129,7 +129,7 @@ jobs:
             fi
             echo "${messages[message_index]}"
             message_index=$(( (message_index + 1) % ${#messages[@]} ))
-            sleep 10
+            sleep 5
           done
             
       # Get public IP address
