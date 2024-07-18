@@ -14,7 +14,7 @@ namespace CookWithWhat.Infrastructure.Persistence
         {
             // //Data source for local
             // optionsBuilder.UseSqlite(
-            //     "Data Source=../CookWithWhat.Infrastructure/Persistence/cookwithwhat.db"
+            //     "Data Source=../CookWithWhat.Infrastructure/Persistence/cookwithwhat.db".
             // );
             //Data source for deployment
             optionsBuilder.UseSqlite(
