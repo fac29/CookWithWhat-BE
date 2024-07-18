@@ -112,8 +112,7 @@ jobs:
           REMOTE_USER: ec2-user
           SOURCE: "./out/"
           TARGET: "/home/ec2-user/app"
-          ARGS: "-v"
-         
+                 
       # Configure EC2 instance
       - name: Configure EC2 instance
         uses: appleboy/ssh-action@master
@@ -204,13 +203,6 @@ jobs:
               cat /home/ec2-user/app.log
               exit 1
             fi
-
-
-
-
-
-
-            
 
       # Output the public IP
       - name: Output Public IP
