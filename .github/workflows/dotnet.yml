@@ -169,6 +169,49 @@ jobs:
             EOT
             sudo systemctl restart nginx;
 
+            # Debug: Print current directory
+            echo "Current directory: $(pwd)"
+                  
+            # Navigate to the app directory
+            cd /home/ec2-user/app
+
+            # Debug: Print contents of the directory
+            echo "Contents of /home/ec2-user/app:"
+            ls -la
+
+            # Make the application executable
+            chmod +x CookWithWhat.API
+
+            # Debug: Check if the file is executable
+            if [ -x CookWithWhat.API ]; then
+              echo "CookWithWhat.API is executable"
+            else
+              echo "Error: CookWithWhat.API is not executable"
+              exit 1
+            fi
+
+            # Run the application
+            echo "Starting the application..."
+            nohup ./CookWithWhat.API > /home/ec2-user/app.log 2>&1 &
+
+            # Debug: Check if the application is running
+            sleep 5  # Give it a moment to start
+            if pgrep -f "./CookWithWhat.API" > /dev/null; then
+              echo "Application is running."
+              ps aux | grep CookWithWhat.API
+            else
+              echo "Error: Application failed to start. Here's the log:"
+              cat /home/ec2-user/app.log
+              exit 1
+            fi
+
+
+
+
+
+
+            
+
       # Output the public IP
       - name: Output Public IP
         run: |
